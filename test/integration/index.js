@@ -1,2 +1,3 @@
-require('./users')
-require('./classifieds')
+require('./users');
+require('./classifieds');
+require('./tags');

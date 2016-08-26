@@ -13,16 +13,10 @@ exports.self = {
   },
   handler: function * () {
     const {Classifieds, Users} = this.app.context;
-    const [classified] = yield Classifieds
+    this.body = yield Classifieds
       .select()
       .where('id', '$classifiedId')
-      .run(this.params);
-
-    if (!classified) {
-      this.throw(404, {error_description: 'could not find the classified'});
-    }
-
-    this.body = classified;
+      .runAndAssert(this.params, this, 'could not find the classified');
   }
 };
 
@@ -47,17 +41,27 @@ exports.create = {
     type: 'object',
     properties: {
       title: {type: 'string', maxLength: 255},
-      content: {type: 'string'}
+      content: {type: 'string'},
+      price: {type: ['number', 'string']}
     },
     required: ['title', 'content']
   },
   handler: function * () {
     const {Classifieds}=this.app.context;
     const {user} = this.state;
+    const {title, content, price} = this.request.body;
+    const classifiedData = {
+      title,
+      content,
+      price: price || null
+    };
 
-    this.assert(user, 403, {error_description: 'you don not have correct access rights'});
+    this.assert(user, 403, {error_description: 'you do not have correct access rights'});
 
-    this.body = yield Classifieds.new(Object.assign(this.request.body, {userId: user.id})).create();
+    this.body = yield Classifieds
+      .new(Object.assign(classifiedData, {userId: user.id}))
+      .create();
+
     this.status = 201;
   }
 };

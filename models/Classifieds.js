@@ -7,10 +7,12 @@ module.exports = function (h) {
       content: 'text',
       createdAt: 'timestamp',
       updatedAt: 'timestamp',
-      userId:'uuid'
+      userId: 'uuid',
+      price:'number'
     },
-    relations:{
-      owner:h.belongsTo('Users','userId')
+    relations: {
+      owner: h.belongsTo('Users', 'userId'),
+      tags: h.belongsToMany('tags', 'ClassifiedsTags', 'classifiedId')
     }
   };
 };

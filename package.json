@@ -22,14 +22,13 @@
     "koa-bodyparser": "^2.2.0",
     "koa-compress": "^1.0.9",
     "koa-json-schema": "^1.0.0",
-    "moment": "^2.14.1",
     "ship-hold-dao": "0.0.2",
     "ship-hold-model-loader": "^1.0.0",
     "ship-hold-uuids": "^1.0.0",
-    "superagent": "^2.1.0",
     "bucanero": "git+https://github.com/zorro-del-caribe/bucanero.git",
     "bucanero-router": "git+https://github.com/zorro-del-caribe/bucanero-router.git",
-    "bucanero-tanker": "git+https://github.com/zorro-del-caribe/bucanero-tanker.git"
+    "bucanero-tanker": "git+https://github.com/zorro-del-caribe/bucanero-tanker.git",
+    "zdc":"https://github.com/zorro-del-caribe/zdc-sdk"
   },
   "devDependencies": {
     "nock": "^8.0.0",

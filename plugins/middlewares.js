@@ -4,7 +4,6 @@ const bodyParser = require('koa-bodyparser');
 const gzip = require('koa-compress');
 const auth = require('../middlewares/authentication');
 const auz = require('../middlewares/authorization');
-const user = require('../middlewares/user');
 
 module.exports = {
   priority: 200,

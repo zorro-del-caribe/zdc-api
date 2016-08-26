@@ -7,6 +7,6 @@ app.start()
     process.exit(1);
   });
 
-app.on('foo', function (ev) {
-  console.log(ev);
-});
+// app.on('foo', function (ev) {
+//   console.log(ev);
+// });

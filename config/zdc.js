@@ -12,7 +12,7 @@ exports.test = {
     endpoint: {
       protocol: 'http',
       hostname: 'localhost',
-      port: 300
+      port: 3000
     }
   }
 };
