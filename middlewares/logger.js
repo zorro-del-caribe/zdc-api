@@ -9,6 +9,7 @@ module.exports = function (options = {}) {
       this.status = status;
       if (status === 500) {
         logger.error(e)
+        logger.error(e)
       } else {
         this.body = {error: e.message || 'unknown error', error_description: e.error_description || 'no description'};
       }
@@ -19,7 +20,6 @@ module.exports = function (options = {}) {
       const referrer = this.get('Referer') || '-';
       const logLine = [status, (this.body && this.body.error) || '-', method, [elapsed, 'ms'].join(' '), url, ip, referrer].join(' | ');
       const level = this.satus < 400 ? 'log' : 'error';
-      this.app.emit('foo', {status, body: this.body});
       logger[level](logLine);
     }
   }

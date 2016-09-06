@@ -55,5 +55,6 @@ sh.getConnection()
     });
   })
   .catch(e=> {
+    console.log(e)
     throw e;
   });
