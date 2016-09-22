@@ -6,7 +6,3 @@ app.start()
     logger.error(err);
     process.exit(1);
   });
-
-// app.on('foo', function (ev) {
-//   console.log(ev);
-// });

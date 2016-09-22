@@ -35,3 +35,31 @@ exports.me = {
     }
   }
 };
+
+exports.self = {
+  description: 'Find user details',
+  method: 'get',
+  path: '/:userId',
+  schema: {
+    type: 'object',
+    properties: {
+      userId: {
+        type: 'string',
+        format: 'uuid'
+      }
+    },
+    required: ['userId']
+  },
+  handler: function * () {
+    const {Users}=this.app.context;
+
+    if (this.state.user && this.state.user.id !== this.params.userId) {
+      this.throw(403, {error_description: 'you do not have access to this user details'});
+    }
+
+    this.body = yield Users
+      .select()
+      .where('id', '$userId')
+      .runAndAssert(this.params, this, 'could not find the user info');
+  }
+};

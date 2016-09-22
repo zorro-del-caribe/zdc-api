@@ -4,7 +4,7 @@ module.exports = function () {
     const {Users} = this.app.context;
     const {target:email} = scope;
 
-    if (email) {
+    if (scope.type === 'user' && email) {
       const [user] =yield Users
         .select()
         .where('email', '$email')

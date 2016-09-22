@@ -12,7 +12,7 @@ exports.self = {
     required: ['classifiedId']
   },
   handler: function * () {
-    const {Classifieds, Users} = this.app.context;
+    const {Classifieds} = this.app.context;
     this.body = yield Classifieds
       .select()
       .where('id', '$classifiedId')

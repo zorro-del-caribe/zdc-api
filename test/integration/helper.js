@@ -9,8 +9,8 @@ module.exports = {
     return a.start()
       .then(function () {
         const {conf} = a.context;
-        const {client_id:user, secret:pass}=conf.value('zdc.auth');
-        const auth = nock(url.format(conf.value('zdc.auth.endpoint')))
+        const {client_id:user, secret:pass,fqdn:endpoint}= conf.value('auth');
+        const auth = nock(url.format(endpoint))
           .get('/tokens/tokenCode')
           .basicAuth({user, pass})
           .reply(200, {

@@ -1,0 +1,18 @@
+version: '2'
+services:
+  api:
+    image: zdc-api:latest
+    ports:
+      - '5000'
+    volumes:
+      - '/Users/Laurent/Documents/code/zdc/zdc-api:/app'
+    links:
+      - db
+  db:
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+#    environment:
+#      - 'VIRTUAL_HOST=http://api.zdc.local, https://api.zdc.local'
+#      - FORCE_SSL=true
+#      - DEBUG=*
