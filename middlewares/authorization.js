@@ -1,7 +1,7 @@
 module.exports = function () {
   return function * (next) {
     const {token} = this.state;
-    const {conf, auth} = this.app.context;
+    const {auth} = this.app.context;
     const fullToken = yield auth.tokens().self({token});
     const {revoked, expires_in, scope} = fullToken;
 

@@ -10,6 +10,10 @@ module.exports = {
       secret,
       endpoint
     });
-    return app;
+    if (process.env.NODE_ENV !== 'test') {
+      return app.context.auth
+        .tokens()
+        .create({grant_type: 'client_credentials'})
+    }
   }
 };

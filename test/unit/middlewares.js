@@ -4,6 +4,7 @@ const koa = require('koa');
 const authentication = require('../../middlewares/authentication');
 const authorization = require('../../middlewares/authorization');
 const http = require('http');
+const broker = require('../../middlewares/broker');
 
 function mockAuth (response) {
   return {
@@ -21,17 +22,6 @@ function mockAuth (response) {
   }
 }
 
-function mockConf () {
-  return {
-    value(path){
-      if (path !== 'auth')
-        throw new Error('wrong conf path');
-
-      return {}
-    }
-  }
-}
-
 test('authentication middleware: http 401 if there is no Authorization header', t=> {
   const app = koa()
     .use(authentication());
@@ -45,7 +35,7 @@ test('authentication middleware: http 401 if there is no Authorization header', 
     });
 });
 
-test('authentication middleware: http 401 if authorisation hedare is invalid', t=> {
+test('authentication middleware: http 401 if authorisation header is invalid', t=> {
   const app = koa()
     .use(authentication());
 
@@ -91,7 +81,6 @@ test('authorization middleware: http 403 if token has been revoked', t=> {
     scope: {},
     expires_in: 234
   });
-  app.context.conf = mockConf();
 
   req(http.createServer(app.callback()))
     .get('/')
@@ -102,7 +91,7 @@ test('authorization middleware: http 403 if token has been revoked', t=> {
     });
 });
 
-test('authorization middleware: http 403 if token has been revoked', t=> {
+test('authorization middleware: http 403 if token has expired', t=> {
   const app = koa()
     .use(function * (next) {
       this.state.token = 'foo';
@@ -116,7 +105,6 @@ test('authorization middleware: http 403 if token has been revoked', t=> {
     scope: {},
     expires_in: -12
   });
-  app.context.conf = mockConf();
 
   req(http.createServer(app.callback()))
     .get('/')
@@ -146,7 +134,6 @@ test('authorization middleware: assign token result', t=> {
     },
     expires_in: 234
   });
-  app.context.conf = mockConf();
 
   req(http.createServer(app.callback()))
     .get('/')
@@ -163,4 +150,28 @@ test('authorization middleware: assign token result', t=> {
       });
       t.end();
     });
+});
+
+test('broker publish body as message if response status is success', t=> {
+  const app = koa()
+    .use(broker('hello.world'))
+    .use(function * () {
+      this.body = 'hello';
+    });
+
+  app.context.channel = {
+    publish(channel, routing, message){
+      t.equal(channel, 'zdc');
+      t.equal(routing, 'hello.world');
+      t.equal(message.toString(), '"hello"');
+      t.end();
+    }
+  };
+
+  req(http.createServer(app.callback()))
+    .get('/')
+    .expect(200)
+    .end(function (err) {
+      t.error(err);
+    })
 });

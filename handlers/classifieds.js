@@ -24,6 +24,7 @@ exports.list = {
   description: 'fetch a list of classifieds',
   path: '/',
   method: 'get',
+  notify: true,
   handler: function * () {
     const {Classifieds} = this.app.context;
     this.body = yield Classifieds
@@ -46,6 +47,7 @@ exports.create = {
     },
     required: ['title', 'content']
   },
+  notify: true,
   handler: function * () {
     const {Classifieds}=this.app.context;
     const {user} = this.state;

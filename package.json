@@ -4,8 +4,8 @@
   "description": "zdc api gateway",
   "main": "index.js",
   "scripts": {
-    "test:unit":"node ./test/unit | tap-spec",
-    "test:integration":"NODE_ENV=test npm run db:create && NODE_ENV=test node ./test/integration | tap-spec",
+    "test:unit": "node ./test/unit | tap-spec",
+    "test:integration": "NODE_ENV=test npm run db:create && NODE_ENV=test node ./test/integration | tap-spec",
     "test": "npm run test:unit && npm run test:integration",
     "start": "node index.js",
     "db:create": "node ./scripts/tables.js"
@@ -18,16 +18,17 @@
   "author": "Laurent Renard",
   "license": "MIT",
   "dependencies": {
+    "amqplib": "^0.4.2",
+    "bucanero": "git+https://github.com/zorro-del-caribe/bucanero.git",
+    "bucanero-router": "git+https://github.com/zorro-del-caribe/bucanero-router.git",
+    "bucanero-tanker": "git+https://github.com/zorro-del-caribe/bucanero-tanker.git",
     "debug": "^2.2.0",
     "koa-bodyparser": "^2.2.0",
     "koa-compress": "^1.0.9",
     "ship-hold-dao": "0.0.2",
     "ship-hold-model-loader": "^1.0.0",
     "ship-hold-uuids": "^1.0.0",
-    "bucanero": "git+https://github.com/zorro-del-caribe/bucanero.git",
-    "bucanero-router": "git+https://github.com/zorro-del-caribe/bucanero-router.git",
-    "bucanero-tanker": "git+https://github.com/zorro-del-caribe/bucanero-tanker.git",
-    "zdc-auth":"git+https://github.com/zorro-del-caribe/node-auth.git"
+    "zdc-auth": "git+https://github.com/zorro-del-caribe/node-auth.git"
   },
   "devDependencies": {
     "nock": "^8.0.0",
